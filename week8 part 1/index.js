@@ -4,8 +4,7 @@ $(document).on('pageinit', function() {
 	//set up listener for button click
 	$(document).on('click', getPosition);
 	
-	//change time box to show message
-	$('#time').val("Press the button to get location data");
+
 	
 });
 
@@ -15,6 +14,12 @@ function getPosition() {
 	
 	//change time box to show updated message
 	$('#time').val("Getting data...");
+    $('#longtext').val("Getting data...");
+    $('#lattext').val("Getting data...");
+    $('#accuracy').val("Getting data...");
+    $('#compas').val("Getting data...");
+    $('#alttext').val("Getting data...");
+    $('#speedtext').val("Getting data...");
 	
 	//instruct location service to get position with appropriate callbacks
 	navigator.geolocation.getCurrentPosition(successPosition, failPosition);
@@ -32,8 +37,11 @@ function successPosition(position) {
     
     var unixtime = new Date(position.timestamp);
     var date = unixtime. toUTCString();
-
-	var time = position.timestamp;
+    
+    var speed = position.coords.speed * 3.6;
+    var altitude = position.coords.altitude;
+    var wot = position.coords.heading;
+	var accNum = position.coords.accuracy;
 	var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
 	
@@ -41,6 +49,10 @@ function successPosition(position) {
 	$('#time').val("Recieved data at " + date);
 	$('#lattext').val("Latitude     " + latitude);
     $('#longtext').val("Longitude " + longitude);
+    $('#accuracy').val("Accuracy is " + accNum + " Meters");
+    $('#compas').val("Way of travel is " + wot);
+    $('#alttext').val("Altitude is " + altitude);
+    $('#speedtext').val("Speed is " + speed);
 	
 }
 
